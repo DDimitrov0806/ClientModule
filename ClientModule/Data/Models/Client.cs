@@ -44,6 +44,10 @@ namespace ClientModule.Data
         [Required]
         public string Email { get; set; }
 
+        public byte[] Image { get; set; }
+
+        public string ContentType { get; set; }
+
         public DateTime? LastVisit { get; set; }
 
         public string Explanation { get; set; }

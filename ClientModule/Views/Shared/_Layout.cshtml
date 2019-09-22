@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - ClientModule</title>
+    <title>@ViewData["Title"] - Test</title>
 
     <environment include="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
@@ -26,12 +26,14 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">ClientModule</a>
+                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">Test</a>
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
-                    <li><a asp-area="" asp-controller="Client" asp-action="Add">Client</a></li>
+                    <li><a asp-area="" asp-controller="Client" asp-action="Create">Create</a></li>
+                    <li><a asp-area="" asp-controller="Role" asp-action="Roles">Roles</a></li>
+                    <li><a asp-area="" asp-controller="User" asp-action="Users">User</a></li>
                 </ul>
                 <partial name="_LoginPartial" />
             </div>
@@ -44,7 +46,7 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; 2019 - ClientModule</p>
+            <p>&copy; 2019 - Test</p>
         </footer>
     </div>
 

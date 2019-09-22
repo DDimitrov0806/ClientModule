@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ClientModule.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20190916193456_Initial")]
+    [Migration("20190917205542_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -32,17 +32,20 @@ namespace ClientModule.Migrations
                     b.Property<string>("City")
                         .IsRequired();
 
+                    b.Property<string>("ContentType");
+
                     b.Property<string>("Country")
                         .IsRequired();
 
                     b.Property<string>("Email")
                         .IsRequired();
 
-                    b.Property<string>("Explanation")
-                        .HasColumnType("text");
+                    b.Property<string>("Explanation");
 
                     b.Property<string>("FirstName")
                         .IsRequired();
+
+                    b.Property<byte[]>("Image");
 
                     b.Property<string>("LastName")
                         .IsRequired();

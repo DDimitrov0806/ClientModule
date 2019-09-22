@@ -40,9 +40,14 @@ namespace ClientModule
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
             services.AddDefaultIdentity<IdentityUser>()
+                .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
+
             services.AddScoped<IClientService, ClientService>();
+            services.AddTransient<IRoleService, RoleService>();
+            services.AddScoped<IUserService, UserService>();
+
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }

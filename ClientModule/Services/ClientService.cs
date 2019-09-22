@@ -1,9 +1,11 @@
 ﻿using ClientModule.Data;
 using ClientModule.Models;
 using ClientModule.Services.Contracts;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -18,31 +20,60 @@ namespace ClientModule.Services
             dbContext = context;
         }
 
-        public void Create(ClientViewModel model)
+        public  void Create(ClientViewModel model,IFormFile picture)
         {
-            dbContext.Clients.Add(new Client
-            {
-                Id = Guid.NewGuid(),
-                FirstName =model.FirstName,
-                MiddleName=model.MiddleName,
-                LastName=model.LastName,
-                Address=model.Address,
-                City=model.City,
-                Country=model.Country,
-                PostCode=model.PostCode,
-                PhoneNumber=model.PhoneNumber,
-                Email=model.Email,
-                LastVisit=DateTime.UtcNow,
-                Explanation=model.Explanation
-                
-            }) ;
 
-            dbContext.SaveChanges();
+            using (var target = new MemoryStream())
+            {
+                picture.CopyTo(target);
+
+                //model.Image.CopyTo(target);
+
+
+                /*IFormFile uploadedImage = model.Image;
+
+                MemoryStream ms = new MemoryStream();
+
+                //if (uploadedImage == null || uploadedImage.ContentType.ToLower().StartsWith("image/"))
+                //{
+
+
+                    uploadedImage.OpenReadStream().CopyTo(ms);
+
+
+                //}
+                */
+
+                dbContext.Clients.Add(new Client
+                {
+                    Id = Guid.NewGuid(),
+                    FirstName = model.FirstName,
+                    MiddleName = model.MiddleName,
+                    LastName = model.LastName,
+                    Address = model.Address,
+                    City = model.City,
+                    Country = model.Country,
+                    PostCode = model.PostCode,
+                    PhoneNumber = model.PhoneNumber,
+                    Email = model.Email,
+                    LastVisit = DateTime.UtcNow,
+                    Explanation = model.Explanation,
+                    Image = target.ToArray(),
+                    ContentType=picture.ContentType
+                    //ContentType = model.Image.ContentType
+
+                });
+                dbContext.SaveChanges();
+            }
+            
         }
 
-        public ClientViewModel Read(Guid id)
+        public ClientViewModel GetClient(Guid id)
         {
-            return dbContext.Clients.Where(c => c.Id == id).Select(m => new ClientViewModel
+
+            MemoryStream ms = new MemoryStream(dbContext.Clients.Where(c => c.Id == id).Select(i=>i.Image).FirstOrDefault());
+
+            ClientViewModel model = dbContext.Clients.Where(c => c.Id == id).Select(m => new ClientViewModel
             {
                 Id = m.Id,
                 FirstName = m.FirstName,
@@ -55,12 +86,19 @@ namespace ClientModule.Services
                 PhoneNumber = m.PhoneNumber,
                 Email = m.Email,
                 LastVisit = m.LastVisit,
-                Explanation = m.Explanation
+                Explanation = m.Explanation,
+                ViewImage=m.Image,
+                ContentType=m.ContentType
+
 
             }).FirstOrDefault();
+
+            
+
+            return model;
         }
 
-        public void Update(ClientViewModel model)
+        public void Edit(ClientViewModel model)
         {
             
 

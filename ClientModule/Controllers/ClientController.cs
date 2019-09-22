@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using ClientModule.Models;
 using ClientModule.Services;
 using ClientModule.Services.Contracts;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ClientModule.Controllers
@@ -26,10 +28,26 @@ namespace ClientModule.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create (ClientViewModel model)
+        public IActionResult Create (ClientViewModel model,IFormFile picture)
         {
-            clientService.Create(model);
+            /*IFormFile uploadedImage = model.Image;
+
+            MemoryStream ms = new MemoryStream();
+
+            uploadedImage.OpenReadStream().CopyTo(ms);
+
+            model.ViewImage = ms.ToArray();
+            model.ContentType = uploadedImage.ContentType;*/
+
+            clientService.Create(model,picture);
             return RedirectToAction("Index", "Home");
+        }
+
+        public IActionResult Display(Guid id)
+        {
+            var model = clientService.GetClient(id);
+
+            return View(model);
         }
     }
 }

@@ -61,8 +61,10 @@ namespace ClientModule.Migrations
                     PostCode = table.Column<int>(nullable: false),
                     PhoneNumber = table.Column<int>(nullable: false),
                     Email = table.Column<string>(nullable: false),
+                    Image = table.Column<byte[]>(nullable: true),
+                    ContentType = table.Column<string>(nullable: true),
                     LastVisit = table.Column<DateTime>(nullable: true),
-                    Explanation = table.Column<string>(type: "text", nullable: true)
+                    Explanation = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
