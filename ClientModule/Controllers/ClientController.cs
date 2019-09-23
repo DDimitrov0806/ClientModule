@@ -28,7 +28,7 @@ namespace ClientModule.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create (ClientViewModel model,IFormFile picture)
+        public IActionResult Create (ClientViewModel model)
         {
             /*IFormFile uploadedImage = model.Image;
 
@@ -39,8 +39,11 @@ namespace ClientModule.Controllers
             model.ViewImage = ms.ToArray();
             model.ContentType = uploadedImage.ContentType;*/
 
-            clientService.Create(model,picture);
-            return RedirectToAction("Index", "Home");
+
+           
+             clientService.Create(model);
+             return RedirectToAction("Index", "Home");
+           
         }
 
         public IActionResult Display(Guid id)
@@ -48,6 +51,36 @@ namespace ClientModule.Controllers
             var model = clientService.GetClient(id);
 
             return View(model);
+        }
+
+        public IActionResult Clients()
+        {
+            return View(clientService.GetClientList());
+        }
+
+        public IActionResult Edit(Guid id)
+        {
+            return View(clientService.GetClient(id));
+        }
+
+        [HttpPost]
+        public IActionResult Edit(ClientViewModel model)
+        {
+            if(ModelState.IsValid)
+            {
+                 clientService.Edit(model);
+                return RedirectToAction("Clients");
+            }
+
+            return View(model);
+
+        }
+
+        public IActionResult Delete(Guid id)
+        {
+            clientService.Delete(id);
+
+            return RedirectToAction("Clients");
         }
     }
 }

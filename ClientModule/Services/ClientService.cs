@@ -20,14 +20,14 @@ namespace ClientModule.Services
             dbContext = context;
         }
 
-        public  void Create(ClientViewModel model,IFormFile picture)
+        public  void Create(ClientViewModel model)
         {
 
             using (var target = new MemoryStream())
             {
-                picture.CopyTo(target);
+                //picture.CopyTo(target);
 
-                //model.Image.CopyTo(target);
+                model.Image.CopyTo(target);
 
 
                 /*IFormFile uploadedImage = model.Image;
@@ -59,8 +59,8 @@ namespace ClientModule.Services
                     LastVisit = DateTime.UtcNow,
                     Explanation = model.Explanation,
                     Image = target.ToArray(),
-                    ContentType=picture.ContentType
-                    //ContentType = model.Image.ContentType
+                   // ContentType=picture.ContentType
+                   ContentType = model.Image.ContentType
 
                 });
                 dbContext.SaveChanges();
@@ -68,10 +68,33 @@ namespace ClientModule.Services
             
         }
 
+        public List<ClientViewModel> GetClientList()
+        {
+            return dbContext.Clients.Select(m => new ClientViewModel
+            {
+                Id = m.Id,
+                FirstName = m.FirstName,
+                MiddleName = m.MiddleName,
+                LastName = m.LastName,
+                Address = m.Address,
+                City = m.City,
+                Country = m.Country,
+                PostCode = m.PostCode,
+                PhoneNumber = m.PhoneNumber,
+                Email = m.Email,
+                LastVisit = m.LastVisit,
+                Explanation = m.Explanation,
+                ViewImage = m.Image,
+                ContentType = m.ContentType
+
+
+            }).ToList();
+        }
+
         public ClientViewModel GetClient(Guid id)
         {
 
-            MemoryStream ms = new MemoryStream(dbContext.Clients.Where(c => c.Id == id).Select(i=>i.Image).FirstOrDefault());
+            //MemoryStream ms = new MemoryStream(dbContext.Clients.Where(c => c.Id == id).Select(i=>i.Image).FirstOrDefault());
 
             ClientViewModel model = dbContext.Clients.Where(c => c.Id == id).Select(m => new ClientViewModel
             {
@@ -114,7 +137,7 @@ namespace ClientModule.Services
                 PostCode = model.PostCode,
                 PhoneNumber = model.PhoneNumber,
                 Email = model.Email,
-                LastVisit = model.LastVisit,
+                LastVisit = DateTime.UtcNow,
                 Explanation = model.Explanation
 
 

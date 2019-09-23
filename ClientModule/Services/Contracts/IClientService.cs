@@ -10,7 +10,9 @@ namespace ClientModule.Services.Contracts
     public interface IClientService
     {
         //void Create(ClientViewModel model);
-        void Create(ClientViewModel model, IFormFile picture);
+        void Create(ClientViewModel model);
+
+        List<ClientViewModel> GetClientList();
 
         ClientViewModel GetClient(Guid id);
 
