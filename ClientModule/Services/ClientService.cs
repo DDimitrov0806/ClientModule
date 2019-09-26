@@ -20,29 +20,12 @@ namespace ClientModule.Services
             dbContext = context;
         }
 
-        public  void Create(ClientViewModel model)
+        public  void Create(ClientViewModel model,IFormFile image)
         {
 
             using (var target = new MemoryStream())
             {
-                //picture.CopyTo(target);
-
-                model.Image.CopyTo(target);
-
-
-                /*IFormFile uploadedImage = model.Image;
-
-                MemoryStream ms = new MemoryStream();
-
-                //if (uploadedImage == null || uploadedImage.ContentType.ToLower().StartsWith("image/"))
-                //{
-
-
-                    uploadedImage.OpenReadStream().CopyTo(ms);
-
-
-                //}
-                */
+                image.CopyTo(target);
 
                 dbContext.Clients.Add(new Client
                 {
@@ -59,8 +42,7 @@ namespace ClientModule.Services
                     LastVisit = DateTime.UtcNow,
                     Explanation = model.Explanation,
                     Image = target.ToArray(),
-                   // ContentType=picture.ContentType
-                   ContentType = model.Image.ContentType
+                    ContentType = image.ContentType
 
                 });
                 dbContext.SaveChanges();
@@ -93,9 +75,6 @@ namespace ClientModule.Services
 
         public ClientViewModel GetClient(Guid id)
         {
-
-            //MemoryStream ms = new MemoryStream(dbContext.Clients.Where(c => c.Id == id).Select(i=>i.Image).FirstOrDefault());
-
             ClientViewModel model = dbContext.Clients.Where(c => c.Id == id).Select(m => new ClientViewModel
             {
                 Id = m.Id,

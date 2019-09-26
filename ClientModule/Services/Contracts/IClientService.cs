@@ -9,8 +9,7 @@ namespace ClientModule.Services.Contracts
 {
     public interface IClientService
     {
-        //void Create(ClientViewModel model);
-        void Create(ClientViewModel model);
+         void Create(ClientViewModel model, IFormFile image);
 
         List<ClientViewModel> GetClientList();
 

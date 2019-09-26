@@ -39,17 +39,6 @@ namespace ClientModule.Controllers
         public IActionResult Edit(UserViewModel user)
         {
 
-            
-            //if (ModelState.IsValid)
-            //{ 
-
-
-            //    userService.AssignToRole(user).Wait();
-
-
-            //    return RedirectToAction("Users");
-            //}
-
             if (ModelState.IsValid)
             {
                 userService.AssignToRole(user).Wait();
@@ -58,9 +47,18 @@ namespace ClientModule.Controllers
                 return RedirectToAction("Users");
             }
 
+            /* var roleList = roleService.GetRoleList().Select(rr =>new SelectListItem { Value = rr.Id, Text = rr.Name }).ToList();
+
+             ViewBag.Roles = roleList;*/
+
+
             var roleList = roleService.GetRoleList();
 
-            ViewBag.Roles = new SelectList(roleList, "Id", "RoleName",user.Role.Id);
+            ViewBag.RoleId = new SelectList(roleList, "RoleId", "RoleName", user.RoleId);
+
+
+
+            // ViewBag.Roles = new SelectList(roleList, "Id", "RoleName",user.Role.Id);
 
             /*var fromDatabaseEF = new SelectList(roleList, "Id", "Name");
             ViewData["RoleList"] = fromDatabaseEF;*/

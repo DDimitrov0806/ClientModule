@@ -44,7 +44,7 @@ namespace ClientModule.Models
         [Display(Name = "E-Mail")]
         public string Email { get; set; }
 
-        public IFormFile Image { get; set; }
+       // public IFormFile Image { get; set; }
 
         [Display(Name = "Image")]
         public byte[] ViewImage { get; set; }

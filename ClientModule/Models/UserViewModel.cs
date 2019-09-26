@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -12,12 +13,17 @@ namespace ClientModule.Models
 
         [Display(Name="User Name")]
         public string UserName { get; set; }
-        
-       /* public string RoleId { get; set; }
 
-        public string RoleName { get; set; }*/
+         public string RoleId { get; set; }
+
+         public string RoleName { get; set; }
 
         public RoleViewModel Role { get; set; }
+
+        //public string RoleName { get; set; }
+
+        public string SelectedRoleId { get; set; }
+        public IEnumerable<SelectListItem> RolesList { get; set; }
 
     }
 }

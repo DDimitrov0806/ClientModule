@@ -28,20 +28,9 @@ namespace ClientModule.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create (ClientViewModel model)
+        public IActionResult Create (ClientViewModel model,IFormFile image)
         {
-            /*IFormFile uploadedImage = model.Image;
-
-            MemoryStream ms = new MemoryStream();
-
-            uploadedImage.OpenReadStream().CopyTo(ms);
-
-            model.ViewImage = ms.ToArray();
-            model.ContentType = uploadedImage.ContentType;*/
-
-
-           
-             clientService.Create(model);
+             clientService.Create(model,image);
              return RedirectToAction("Index", "Home");
            
         }

@@ -28,8 +28,8 @@ namespace ClientModule.Services
                 Id = x.Id,
                 UserName = x.UserName,
                 // RoleId=GetRoleId(x.Id),
-                /* RoleId = dbContext.UserRoles.Where(u => u.UserId == x.Id).Select(r => r.RoleId).FirstOrDefault(),
-                 RoleName= dbContext.Roles.Where(r => r.Id == roleId).Select(rn => rn.Name).FirstOrDefault()*/
+                 RoleId = dbContext.UserRoles.Where(u => u.UserId == x.Id).Select(r => r.RoleId).FirstOrDefault(),
+                 //RoleName= dbContext.Roles.Where(r => r.Id == roleId).Select(rn => rn.Name).FirstOrDefault(),
                 Role = dbContext.Roles
                 .Where(r => r.Id == dbContext.UserRoles.Where(u => u.UserId == x.Id).Select(ri => ri.RoleId).FirstOrDefault())
                 .Select(rvm => new RoleViewModel

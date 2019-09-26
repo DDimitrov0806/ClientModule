@@ -3,8 +3,6 @@
 @{
     ViewData["Title"] = "Edit";
     Layout = "~/Views/Shared/_Layout.cshtml";
-
-    SelectList RoleList = ViewBag.Roles;
 }
 
 <h2>Edit</h2>
@@ -14,15 +12,16 @@
     <div class="col-md-4">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            @Html.LabelFor(model => model.Role.Name)
-            @Html.DropDownListFor(model => model.Role.Id, RoleList, "Role", new { @class = "form-control"})
-            @Html.ValidationMessageFor(model => model.Role.Id, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(model => model.RoleName, new { @class = "control-label col-md-2" })
+                @Html.DropDownList("RoleId", ViewBag.RoleId,"Select role", new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.RoleId, "", new { @class = "text-danger" })
+            </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-default" />
             </div>
         </form>
     </div>
 </div>
-
 
 
